@@ -1,0 +1,27 @@
+@import "variables";
+@import "toast";
+
+// @import "bootstrap/scss/modal";
+// @import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
+
+#app-root {
+  // @import "bootstrap";
+  font-size: 14px;
+
+  @import "bootstrap/scss/reboot";
+  @import "bootstrap/scss/grid";
+  @import "bootstrap/scss/containers";
+  @import "bootstrap/scss/nav";
+  @import "bootstrap/scss/forms";
+  @import "bootstrap/scss/buttons";
+  @import "bootstrap/scss/type";
+  @import "bootstrap/scss/alert";
+  @import "bootstrap/scss/close";
+  @import "bootstrap/scss/transitions";
+  @import "bootstrap/scss/helpers";
+  @import "bootstrap/scss/utilities/api";
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}

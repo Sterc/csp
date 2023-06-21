@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+use Sterc\CSP\Console\Console;
+
+require dirname(__DIR__) . '/core/bootstrap.php';
+
+(new Console())->run();
