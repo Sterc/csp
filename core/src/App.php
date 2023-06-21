@@ -86,7 +86,7 @@ class App
                 $this->run();
                 exit();
             }
-            if ($this->modx->context !== 'mgr') {
+            if ($this->modx->context->key !== 'mgr') {
                 $this->setHeaders();
             }
         }
