@@ -1,8 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Sterc\CSP\Console\Console;
-
+/** @var \MODX\Revolution\modX $modx */
 require dirname(__DIR__) . '/core/bootstrap.php';
 
-(new Console())->run();
+(new Sterc\CSP\Console\Console($modx))->run();
