@@ -1,0 +1,19 @@
+name: Sterc CSP
+lowCaseName: sterc-csp
+namespace: Sterc\CSP
+description:
+author: Sterc
+version: 1.0.0
+
+menus:
+  - text: StercCSP
+    namespace: sterc-csp
+    action: home
+
+plugins:
+  - name: StercCSP
+    file: plugin.php
+    events: ["OnHandleRequest"]
+
+database:
+  tables: ['']
