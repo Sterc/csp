@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "watch": "vite build --mode development --watch",
     "eslint": "eslint --ext .js,.vue ./src",
     "eslint:fix": "eslint --fix --ext .js,.vue ./src",
     "stylelint": "stylelint ./src/assets/scss",

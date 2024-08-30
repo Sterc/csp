@@ -1,9 +1,9 @@
 <template>
   <div>
-    <b-tabs v-if="items.length" v-model="tab" pills fill content-class="pt-4">
+    <b-tabs v-if="items.length" v-model="tab" underline content-class="main-wrapper border-start border-end">
       <b-tab title="Global">
         <b-alert variant="light" :model-value="true">
-          Use this switches below to globally enable/disable directives.
+          Use these switches below to globally enable/disable directives.
         </b-alert>
         <group v-for="group in items" :key="group.id" :model-value="group" class="mt-4" />
       </b-tab>

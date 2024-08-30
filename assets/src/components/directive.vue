@@ -8,7 +8,7 @@
         </div>
         <div class="ms-auto">
           <b-button v-if="canSave" variant="primary" class="me-2" @click="onSave">&check;</b-button>
-          <b-button variant="secondary" @click="onAdd">&plus;</b-button>
+          <b-button variant="secondary" size="sm" @click="onAdd"><i class="icon icon-plus"></i></b-button>
         </div>
       </div>
     </div>

@@ -10,11 +10,11 @@
         @click="checkGroup(record)"
       />
     </div>
-    <div class="ps-md-2">
+    <div class="csp-directives">
       <div
         v-for="directive in record.directives"
         :key="directive.key"
-        class="d-flex align-items-center justify-content-between mt-2"
+        class="d-flex align-items-center justify-content-between"
       >
         <div class="pe-md-3">
           <div class="fw-bold cursor-pointer" @click="checkDirective(directive)">{{ directive.key }}</div>
