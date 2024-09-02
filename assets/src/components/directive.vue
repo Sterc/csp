@@ -7,7 +7,9 @@
           <div class="text-muted">{{ record.description }}</div>
         </div>
         <div class="ms-auto">
-          <b-button v-if="canSave" variant="primary" class="me-2" @click="onSave">&check;</b-button>
+          <b-button v-if="canSave" variant="primary" size="sm" class="me-2" @click="onSave">
+            <i class="icon icon-check"></i>
+          </b-button>
           <b-button variant="secondary" size="sm" @click="onAdd"><i class="icon icon-plus"></i></b-button>
         </div>
       </div>
