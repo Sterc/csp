@@ -1,22 +1,25 @@
 <?php
 
 if (!defined('MODX_CORE_PATH')) {
-    $dir = __DIR__;
-    while (true) {
-        if ($dir === '/') {
-            break;
+    if (file_exists('/modx/config.core.php')) {
+        require '/modx/config.core.php';
+    } else {
+        $dir = __DIR__;
+        while (true) {
+            if ($dir === '/') {
+                break;
+            }
+            if (file_exists($dir . '/config.core.php')) {
+                require $dir . '/config.core.php';
+                break;
+            }
+            if (file_exists($dir . '/config/config.inc.php')) {
+                require $dir . '/config/config.inc.php';
+                break;
+            }
+            $dir = dirname($dir);
         }
-        if (file_exists($dir . '/config.core.php')) {
-            require $dir . '/config.core.php';
-            break;
-        }
-        if (file_exists($dir . '/config/config.inc.php')) {
-            require $dir . '/config/config.inc.php';
-            break;
-        }
-        $dir = dirname($dir);
     }
-
     if (!defined('MODX_CORE_PATH')) {
         exit('Could not load MODX core');
     }

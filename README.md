@@ -1,35 +1,47 @@
 Sterc Content Security Policy
 ---
 
-### How to use
+### Dependencies
 
-This is unusual extra that should be installed into MODX 3 **with composer** to resolve potential dependency conflicts.
+This package requires [mmxDatabase][mmx-database] to work with MODX database using Eloquent models.
 
-If you use MODX without `composer.json`, you need to [download this file from official MODX repository][1] into the 
-root of your project and run `composer update`.
+The `mmx/database` dependency will be downloaded automatically by Composer, you need only install it inside MODX.
+
+### Prepare
+
+This package can be installed only with Composer.
+
+If you are still not using Composer with MODX 3, just download the `composer.json` of your version:
+```bash
+cd /to/modx/root/
+wget https://raw.githubusercontent.com/modxcms/revolution/v3.0.4-pl/composer.json
+```
+
+Then run `composer update` and you are ready to install this package.
 
 ### Install
 
-Just run
-```
-composer require sterc/csp --with-all-dependencies
-```
-
-Then you need to add installed package into MODX with shipped console script
-```
+```bash
+composer require sterc/csp
+composer exec mmx-database install # optional, if you haven't used Eloquent for MODX 3 before
 composer exec sterc-csp install
 ```
 
-This will run database migrations and register everything needed.
+### Update
+```bash
+composer update mmx/forms
+composer exec mmx-forms install
+```
 
 ### Remove
 
 Almost the same commands but in reversed order:
 ```
 composer exec sterc-csp remove
+composer exec mmx-database remove # only if you don't want to use Eloquent for MODX 3 anymore
 composer remove sterc/csp
 ```
 
 Custom tables will be deleted along with all other package entities.
 
-[1]: https://github.com/modxcms/revolution/blob/3.x/package.json
+[mmx-database]: https://packagist.org/packages/mmx/database

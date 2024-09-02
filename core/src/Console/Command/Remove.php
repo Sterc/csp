@@ -17,12 +17,16 @@ class Remove extends Command
 {
     protected static $defaultName = 'remove';
     protected static $defaultDescription = 'Remove Sterc CSP extra from MODX 3';
+    protected modX $modx;
+
+    public function __construct($modx, ?string $name = null)
+    {
+        parent::__construct($name);
+        $this->modx = $modx;
+    }
 
     public function run(InputInterface $input, OutputInterface $output): void
     {
-        /** @var modX $modx */
-        global $modx;
-
         $srcPath = MODX_CORE_PATH . 'vendor/sterc/csp';
         $corePath = MODX_CORE_PATH . 'components/sterc-csp';
         $assetsPath = MODX_ASSETS_PATH . 'components/sterc-csp';
@@ -36,17 +40,17 @@ class Remove extends Command
             $output->writeln('<info>Removed symlink for "assets"</info>');
         }
 
-        if ($namespace = $modx->getObject(modNamespace::class, ['name' => 'sterc-csp'])) {
+        if ($namespace = $this->modx->getObject(modNamespace::class, ['name' => 'sterc-csp'])) {
             $namespace->remove();
             $output->writeln('<info>Removed namespace "sterc-csp"</info>');
         }
 
-        if ($menu = $modx->getObject(modMenu::class, ['namespace' => 'sterc-csp'])) {
+        if ($menu = $this->modx->getObject(modMenu::class, ['namespace' => 'sterc-csp'])) {
             $menu->remove();
             $output->writeln('<info>Removed menu "StercCSP"</info>');
         }
 
-        if ($plugin = $modx->getObject(modPlugin::class, ['name' => 'StercCSP'])) {
+        if ($plugin = $this->modx->getObject(modPlugin::class, ['name' => 'StercCSP'])) {
             /** @var modPluginEvent $event */
             foreach ($plugin->getMany('PluginEvents') as $event) {
                 $event->remove();
@@ -62,7 +66,7 @@ class Remove extends Command
             $output->writeln(explode(PHP_EOL, $res));
         }
 
-        $modx->runProcessor('system/clearcache');
+        $this->modx->getCacheManager()->refresh();
         $output->writeln('<info>Cleared MODX cache</info>');
     }
 }

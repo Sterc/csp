@@ -8,6 +8,6 @@ use Vesp\Controllers\ModelController;
 
 class Directives extends ModelController
 {
-    protected $primaryKey = 'key';
-    protected $model = Directive::class;
+    protected string|array $primaryKey = 'key';
+    protected string $model = Directive::class;
 }

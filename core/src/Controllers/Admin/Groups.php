@@ -10,7 +10,7 @@ use Vesp\Controllers\ModelController;
 
 class Groups extends ModelController
 {
-    protected $model = Group::class;
+    protected string $model = Group::class;
 
     public function prepareRow(Model $object): array
     {

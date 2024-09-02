@@ -17,7 +17,8 @@
     "bin/sterc-csp"
   ],
   "require": {
-    "php": ">=7.4",
-    "vesp/core": "^2.8.0"
+    "php": ">=8.1",
+    "mmx/database": "^1.0.0",
+    "vesp/core": "^4.0.0"
   }
 }

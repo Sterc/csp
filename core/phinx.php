@@ -1,19 +1,19 @@
 <?php
 
-use Sterc\CSP\Services\Eloquent;
-use Vesp\Services\Migration;
-
 /** @var MODX\Revolution\modX $modx */
 require __DIR__ . '/bootstrap.php';
 
-$connection = (new Eloquent($modx))->getConnection();
+/** @var MMX\Database\App $app */
+$app = $modx->services->get('mmxDatabase');
+$connection = $app->getConnection();
 $config = $connection->getConfig();
+
+$pdo = $connection->getPdo();
 
 return [
     'paths' => [
         'migrations' => '%%PHINX_CONFIG_DIR%%/db',
     ],
-    'migration_base_class' => Migration::class,
     'templates' => [
         'style' => 'up_down',
     ],
