@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
+use Phinx\Migration\AbstractMigration;
 use Sterc\CSP\Models\Directive;
 use Sterc\CSP\Models\Group;
-use Vesp\Services\Migration;
 
-final class Directives extends Migration
+final class Directives extends AbstractMigration
 {
     public function up(): void
     {
-        $this->schema->create(
+        $schema = Manager::schema();
+        $schema->create(
             'csp_groups',
             static function (Blueprint $table) {
                 $table->id();
@@ -22,7 +24,7 @@ final class Directives extends Migration
             }
         );
 
-        $this->schema->create(
+        $schema->create(
             'csp_directives',
             static function (Blueprint $table) {
                 $table->foreignId('group_id')
@@ -112,7 +114,7 @@ final class Directives extends Migration
                 Directive::query()->insert([
                     'group_id' => $group->id,
                     'key' => $key,
-                    'description' => $description
+                    'description' => $description,
                 ]);
             }
         }
@@ -120,7 +122,8 @@ final class Directives extends Migration
 
     public function down(): void
     {
-        $this->schema->drop('csp_directives');
-        $this->schema->drop('csp_groups');
+        $schema = Manager::schema();
+        $schema->drop('csp_directives');
+        $schema->drop('csp_groups');
     }
 }

@@ -18,12 +18,16 @@ class Install extends Command
 
     protected static $defaultName = 'install';
     protected static $defaultDescription = 'Install Sterc CSP extra for MODX 3';
+    protected modX $modx;
+
+    public function __construct($modx, ?string $name = null)
+    {
+        parent::__construct($name);
+        $this->modx = $modx;
+    }
 
     public function run(InputInterface $input, OutputInterface $output): void
     {
-        /** @var modX $modx */
-        global $modx;
-
         $srcPath = MODX_CORE_PATH . 'vendor/sterc/csp';
         $corePath = MODX_CORE_PATH . 'components/sterc-csp';
         $assetsPath = MODX_ASSETS_PATH . 'components/sterc-csp';
@@ -37,8 +41,8 @@ class Install extends Command
             $output->writeln('<info>Created symlink for "assets"</info>');
         }
 
-        if (!$modx->getObject(modNamespace::class, ['name' => 'sterc-csp'])) {
-            $namespace = new modNamespace($modx);
+        if (!$this->modx->getObject(modNamespace::class, ['name' => 'sterc-csp'])) {
+            $namespace = new modNamespace($this->modx);
             $namespace->name = 'sterc-csp';
             $namespace->path = '{core_path}components/sterc-csp/';
             $namespace->assets_path = '{assets_path}components/sterc-csp/';
@@ -46,19 +50,19 @@ class Install extends Command
             $output->writeln('<info>Created namespace "sterc-csp"</info>');
         }
 
-        if (!$modx->getObject(modMenu::class, ['namespace' => 'sterc-csp', 'action' => 'home'])) {
-            $menu = new modMenu($modx);
+        if (!$this->modx->getObject(modMenu::class, ['namespace' => 'sterc-csp', 'action' => 'home'])) {
+            $menu = new modMenu($this->modx);
             $menu->namespace = 'sterc-csp';
             $menu->action = 'home';
             $menu->parent = 'topnav';
             $menu->text = 'StercCSP';
-            $menu->menuindex = $modx->getCount(modMenu::class, ['parent' => 'topnav']);
+            $menu->menuindex = $this->modx->getCount(modMenu::class, ['parent' => 'topnav']);
             $menu->save();
             $output->writeln('<info>Created menu "StercCSP"</info>');
         }
 
-        if (!$plugin = $modx->getObject(modPlugin::class, ['name' => 'StercCSP'])) {
-            $plugin = new modPlugin($modx);
+        if (!$plugin = $this->modx->getObject(modPlugin::class, ['name' => 'StercCSP'])) {
+            $plugin = new modPlugin($this->modx);
             $plugin->name = 'StercCSP';
             $plugin->plugincode = preg_replace('#^<\?php#', '', file_get_contents($corePath . '/elements/plugin.php'));
             $plugin->save();
@@ -71,8 +75,8 @@ class Install extends Command
         ];
         foreach ($pluginEvents as $name) {
             $key = ['pluginid' => $plugin->id, 'event' => $name];
-            if (!$modx->getObject('modPluginEvent', $key)) {
-                $event = new modPluginEvent($modx);
+            if (!$this->modx->getObject('modPluginEvent', $key)) {
+                $event = new modPluginEvent($this->modx);
                 $event->fromArray($key, '', true, true);
                 $event->save();
                 $output->writeln('Added event "' . $name . '" to plugin "StercCSP"');
@@ -86,7 +90,7 @@ class Install extends Command
             $output->writeln(explode(PHP_EOL, $res));
         }
 
-        $modx->runProcessor('system/clearcache');
+        $this->modx->getCacheManager()->refresh();
         $output->writeln('<info>Cleared MODX cache</info>');
     }
 }
