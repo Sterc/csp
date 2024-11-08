@@ -1,5 +1,6 @@
 Sterc Content Security Policy
 ---
+# The New Skeleton Structure
 
 ### Dependencies
 
@@ -26,6 +27,13 @@ composer require sterc/csp
 composer exec mmx-database install # optional, if you haven't used Eloquent for MODX 3 before
 composer exec sterc-csp install
 ```
+After installation, module appears in the menu.
+
+There was an issue with the symlink used to link the assets/components/sterc-csp folder to its actual location inside the vendor folder. However, it all worked after sterc-scp/assets files were copied to the location inside webroot/assets/components/ folder.
+```bash
+cp -r ./webroot/core/vendor/sterc/csp/assets/* to ./webroot/assets/components/sterc-csp/
+```
+It appears issues is specific for MS Windows machines.
 
 ### Update
 ```bash
@@ -45,3 +53,23 @@ composer remove sterc/csp
 Custom tables will be deleted along with all other package entities.
 
 [mmx-database]: https://packagist.org/packages/mmx/database
+
+# The Old Project Skeleton
+
+The old project skeleton has a different structure with webroot and private root folders
+
+In order to install package on older skeleton, additional change is required:
+
+In a file: `private/core/vendor/sterc/csp/core/src/App.php`
+This line should be added at line 25: 
+```php
+$this->modx->services->add('mmxDatabase', new \MMX\Database\App($modx));
+```
+
+This is to load mmxDatabase, without this it is not possible to install or use CSP package.
+
+The rest of the installation is the same as with the new skeleton.
+
+There was an issue with frontend call and redirection: https://evbox.com.local/en/sterc-csp/admin/groups
+
+This is a VUE application that loads in modx manager page. The url path was prefixed with /en/.
